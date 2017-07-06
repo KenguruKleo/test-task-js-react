@@ -8,8 +8,8 @@ import cors from 'cors';
 
 // DB Setup
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/auth', {
-//mongoose.connect('mongodb://192.168.99.100/auth', {
+mongoose.connect('mongodb://localhost/site_db', {
+//mongoose.connect('mongodb://192.168.99.100/site_db', {
     useMongoClient: true,
 }).then( db => {} );
 

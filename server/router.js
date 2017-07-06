@@ -1,4 +1,5 @@
 import Authentication from './controllers/authentication';
+import Markers from './controllers/markers';
 import passortService from './services/passport';
 import passport from 'passport';
 
@@ -14,4 +15,6 @@ export default function ( app ) {
     app.get( '/check_token', requireAuth, (req, res)=>{ res.send({ message: 'OK'}); });
     app.post( '/signin', requireSignin, Authentication.signin );
     app.post( '/signup', Authentication.signup );
+
+    app.post( '/markers', requireAuth, Markers.saveMarkers );
 }
