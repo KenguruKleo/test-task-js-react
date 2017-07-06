@@ -1,12 +1,15 @@
 import React from 'react';
 import Header from './header';
+import Grid from 'react-bootstrap/lib/Grid';
 
 class App extends React.Component{
     render() {
         return (
             <div>
                 <Header/>
-                { this.props.children }
+                <Grid>
+                    { this.props.children }
+                </Grid>
             </div>
         );
     }
