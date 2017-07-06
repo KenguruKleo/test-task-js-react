@@ -14,6 +14,8 @@
   "author": "Konstantin Yemelianov",
   "license": "ISC",
   "dependencies": {
+    "2gis-maps": "^3.3.5",
+    "2gis-maps-react": "0.0.3",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
     "concurrently": "^3.5.0",
