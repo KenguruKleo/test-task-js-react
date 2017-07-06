@@ -14,6 +14,9 @@ class Header extends React.Component{
                         <LinkContainer to="/"><a>Application</a></LinkContainer>
                     </Navbar.Brand>
                 </Navbar.Header>
+                <Nav>
+                    <LinkContainer to="/map"><NavItem  eventKey={4}>Map</NavItem></LinkContainer>
+                </Nav>
                 <Nav pullRight>
                     { this.props.authenticated
                         ? <LinkContainer to="/signout"><NavItem  eventKey={1}>Sign out</NavItem></LinkContainer>

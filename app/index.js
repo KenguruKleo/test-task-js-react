@@ -1,3 +1,4 @@
+import base from './styles/basic.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -14,7 +15,7 @@ import Signout from './components/auth/signout';
 import Signup from './components/auth/signup';
 import Map from './components/map';
 
-const Welcome = ()=><h1>Welcome</h1>;
+const Welcome = ()=><h1 className="base-style">Welcome</h1>;
 
 const middleware = [thunk];
 const store = createStore(reducers, {}, compose(

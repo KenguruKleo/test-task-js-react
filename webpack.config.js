@@ -46,6 +46,19 @@ let config = {
             {
                 test: /\.(png|jpg)$/,
                 loader: "url-loader?limit=100000"
+            },
+            {
+                test: /\.less$/,
+                use: [{
+                    loader: "style-loader"
+                }, {
+                    loader: "css-loader"
+                }, {
+                    loader: "less-loader", options: {
+                        strictMath: true,
+                        noIeCompat: true
+                    }
+                }]
             }
         ]
     }
