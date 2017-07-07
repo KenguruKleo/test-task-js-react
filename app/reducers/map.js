@@ -11,6 +11,7 @@ const SAVE_MARKERS_SUCCESS = 'map/SAVE_MARKERS_SUCCESS';
 const FETCH_MARKERS = 'map/FETCH_MARKERS';
 const FETCH_MARKERS_SUCCESS = 'map/FETCH_MARKERS_SUCCESS';
 const FETCH_MARKERS_ERROR = 'map/FETCH_MARKERS_ERROR';
+import { UNAUTH_USER } from './auth';
 
 const zoom = (state = 16, action = {}) => {
     switch (action.type){
@@ -39,6 +40,7 @@ const marker = (state = {pos: [0,0]}, action = {}) => {
 const markers = (state = [], action ={}) => {
     switch (action.type){
         case FETCH_MARKERS:
+        case UNAUTH_USER:
             return [];
         case FETCH_MARKERS_SUCCESS:
             return action.markers.map( item => marker(item, action) );

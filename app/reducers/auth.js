@@ -4,7 +4,7 @@ import history from '../helpers/history';
 import basicAuthToken from 'basic-auth-token';
 
 const AUTH_USER = 'auth/AUTH_USER';
-const UNAUTH_USER = 'auth/UNAUTH_USER';
+export const UNAUTH_USER = 'auth/UNAUTH_USER';
 const AUTH_ERROR = 'auth/AUTH_ERROR';
 
 const authenticated = (state = false, action ={}) => {

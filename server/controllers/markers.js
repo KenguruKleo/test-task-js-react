@@ -30,7 +30,7 @@ export default {
         Markers.findOne({ email: email}, (err, docs)=> {
             if (err) { return next(err); }
 
-            res.status(200).send( docs );
+            res.status(200).send( docs || {markers:[]});
         })
     }
     
