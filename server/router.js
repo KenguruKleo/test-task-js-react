@@ -3,9 +3,9 @@ import Markers from './controllers/markers';
 import passortService from './services/passport';
 import passport from 'passport';
 
-const requireAuth = passport.authenticate('jwt', { session: false });
+//const requireAuth = passport.authenticate('jwt', { session: false });
+const requireAuth = passport.authenticate('basic', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
-const requireBasicAuth = passport.authenticate('basic', { session: false });
 
 export default function ( app ) {
 
@@ -18,5 +18,5 @@ export default function ( app ) {
     app.post( '/signup', Authentication.signup );
 
     app.post( '/markers', requireAuth, Markers.saveMarkers );
-    app.get( '/markers', requireBasicAuth, Markers.fetchMarkers );
+    app.get( '/markers', requireAuth, Markers.fetchMarkers );
 }

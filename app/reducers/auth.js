@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import URLS from '../api/urls';
 import history from '../helpers/history';
+import basicAuthToken from 'basic-auth-token';
 
 const AUTH_USER = 'auth/AUTH_USER';
 const UNAUTH_USER = 'auth/UNAUTH_USER';
@@ -67,7 +68,8 @@ export const singinUser = ({email, password}) => {
             if(response.status === 200){
                 response.json().then( data => {
                     dispatch({type: AUTH_USER});
-                    localStorage.setItem('token', data.token);
+                    //localStorage.setItem('token', data.token); //use jwt auth token
+                    localStorage.setItem('token', 'Basic ' + basicAuthToken(email, password)); //use basic auth
                     history.push('/map');
                 });
             } else {
@@ -92,7 +94,8 @@ export const singupUser = ({email, password}) => {
             if(response.status === 200){
                 response.json().then( data => {
                     dispatch({type: AUTH_USER});
-                    localStorage.setItem('token', data.token);
+                    //localStorage.setItem('token', data.token); //use jwt auth token
+                    localStorage.setItem('token', 'Basic ' + basicAuthToken(email, password)); //use basic auth
                     history.push('/map');
                 });
             } else {
