@@ -72,7 +72,7 @@ export const saveMarkers = () => {
         const token = localStorage.getItem('token');
         fetch(URLS.MARKERS, {
             method: 'post',
-            headers: { authorization: token },
+            //headers: { authorization: token },
             body: JSON.stringify( {markers: state.map.markers} )
         }).then( res => {
             dispatch({ type: SAVE_MARKERS_SUCCESS });
@@ -87,7 +87,7 @@ export const fetchMarkers = ()=>{
         const token = localStorage.getItem('token');
         fetch(URLS.MARKERS, {
             method: 'get',
-            headers: { authorization: token }
+            //headers: { authorization: token }
         }).then( response => {
             if(response.status === 200){
                 response.json().then( data => {
