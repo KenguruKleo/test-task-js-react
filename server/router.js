@@ -17,4 +17,5 @@ export default function ( app ) {
     app.post( '/signup', Authentication.signup );
 
     app.post( '/markers', requireAuth, Markers.saveMarkers );
+    app.get( '/markers', requireAuth, Markers.fetchMarkers );
 }

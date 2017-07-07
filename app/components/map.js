@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers } from '../reducers/map';
+import { zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers, fetchMarkers } from '../reducers/map';
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import Button from 'react-bootstrap/lib/Button';
 import Map from '2gis-maps-react/lib/Map';
@@ -18,6 +18,7 @@ const MapComponent = props => {
                 <Button onClick = {props.zoomOut}>Zoom Out</Button>
                 <Button onClick = {props.undoAddMarker}>Undo add marker</Button>
                 <Button onClick = {props.saveMarkers}>Save</Button>
+                <Button onClick = {props.fetchMarkers}>Load</Button>
             </ButtonGroup>
             <Map
                 style={{width: "100%", height: "500px"}}
@@ -41,5 +42,5 @@ export default connect(
         zoom: state.map.zoom,
         markers: state.map.markers
     }),
-    { zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers }
+    { zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers, fetchMarkers }
 )(MapComponent);

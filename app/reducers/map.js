@@ -8,6 +8,9 @@ const ADD_MARKER = 'map/ADD_MARKER';
 const UNDO_ADD_MARKER = 'map/UNDO_ADD_MARKER';
 const SAVE_MARKERS = 'map/SAVE_MARKERS';
 const SAVE_MARKERS_SUCCESS = 'map/SAVE_MARKERS_SUCCESS';
+const FETCH_MARKERS = 'map/FETCH_MARKERS';
+const FETCH_MARKERS_SUCCESS = 'map/FETCH_MARKERS_SUCCESS';
+const FETCH_MARKERS_ERROR = 'map/FETCH_MARKERS_ERROR';
 
 const zoom = (state = 16, action = {}) => {
     switch (action.type){
@@ -24,6 +27,8 @@ const zoom = (state = 16, action = {}) => {
 
 const marker = (state = {pos: [0,0]}, action = {}) => {
     switch (action.type){
+        case FETCH_MARKERS_SUCCESS:
+            return { pos: state.pos };
         case ADD_MARKER:
             return { pos: [action.latlng.lat, action.latlng.lng] };
         default:
@@ -33,6 +38,10 @@ const marker = (state = {pos: [0,0]}, action = {}) => {
 
 const markers = (state = [], action ={}) => {
     switch (action.type){
+        case FETCH_MARKERS:
+            return [];
+        case FETCH_MARKERS_SUCCESS:
+            return action.markers.map( item => marker(item, action) );
         case ADD_MARKER:
             return [ ...state, marker(null, action) ];
         case UNDO_ADD_MARKER:
@@ -65,7 +74,29 @@ export const saveMarkers = () => {
             method: 'post',
             headers: { authorization: token },
             body: JSON.stringify( {markers: state.map.markers} )
-        })
+        }).then( res => {
+            dispatch({ type: SAVE_MARKERS_SUCCESS });
+        });
 
+    }
+};
+export const fetchMarkers = ()=>{
+    return dispatch => {
+        dispatch({ type: FETCH_MARKERS });
+
+        const token = localStorage.getItem('token');
+        fetch(URLS.MARKERS, {
+            method: 'get',
+            headers: { authorization: token }
+        }).then( response => {
+            if(response.status === 200){
+                response.json().then( data => {
+                    console.log(data);
+                    dispatch({ type: FETCH_MARKERS_SUCCESS, markers: data.markers });
+                });
+            } else {
+                dispatch({ type: FETCH_MARKERS_ERROR });
+            }
+        });
     }
 };
