@@ -54,7 +54,7 @@ class MapComponent extends React.Component {
                         onClick = {
                             ()=>this.setState( {enableAddMarkers: ! this.state.enableAddMarkers} )
                         }>
-                        Enable add markers by click
+                        Click on the map add new marker
                     </Checkbox>
                 </form>
                 <Map
