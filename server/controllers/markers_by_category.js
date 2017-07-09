@@ -5,10 +5,12 @@ export default {
     findMarkers: function (req, res, next) {
         const url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
         const key = config.google_api;
-        const location="46.4819845,30.7346978";
-        const rankby="distance";
-        const type="pharmacy";
+        const location = `${req.body.center[0]},${req.body.center[1]}`;
+        const rankby = "distance";
+        const type = req.body.category;
+
         const finalUrl = `${url}?key=${key}&location=${location}&rankby=${rankby}&type=${type}`;
+
         console.log(finalUrl);
         fetch( finalUrl, {
             method: 'get'

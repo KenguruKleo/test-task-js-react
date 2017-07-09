@@ -13,8 +13,9 @@ const categoriesList = ()=>[
     {name: "Restaurants", id: "restaurant"},
 ];
 
-const markersByCategory = (state=[], action={}) => {
+const markers = (state=[], action={}) => {
     switch (action.type){
+        case SELECT_CATEGORY:
         case FETCH_MARKERS_BY_CATEGORY:
         case FETCH_MARKERS_BY_CATEGORY_ERROR:
             return [];
@@ -32,7 +33,7 @@ const markersByCategory = (state=[], action={}) => {
     }
 };
 
-const fetchingMarkersByCategories = (state=false, action={}) => {
+const fetching= (state=false, action={}) => {
     switch (action.type){
         case FETCH_MARKERS_BY_CATEGORY:
             return true;
@@ -56,20 +57,27 @@ const selectedCategory = (state = null, action ={}) => {
 export default combineReducers({
     selected: selectedCategory,
     categoriesList,
-    markersByCategory,
-    fetchingMarkersByCategories
+    markers,
+    fetching
 });
 
 const fetchMarkersByCategory = (category, center) => {
     return dispatch => {
+
+        dispatch({ type: FETCH_MARKERS_BY_CATEGORY });
+
         const token = localStorage.getItem('token');
         fetch(URLS.MARKERS_BY_CATEGORY, {
             method: 'post',
-            headers: {authorization: token}
+            headers: {authorization: token},
+            body: JSON.stringify({
+                category,
+                center
+            })
         }).then(response => {
             if (response.status === 200) {
                 response.json().then(data => {
-                    console.log(data);
+                    //console.log(data);
                     dispatch({type: FETCH_MARKERS_BY_CATEGORY_SUCCESS, markers: data.results});
                 });
             } else {
@@ -88,8 +96,8 @@ export const selectCategory = category=>{
 
         dispatch({ type: SELECT_CATEGORY, selected: category });
 
-        dispatch( fetchMarkersByCategory() );
-
-
+        if( category !== null ){
+            dispatch( fetchMarkersByCategory(category, state.mapCenter) );
+        }
     };
 };

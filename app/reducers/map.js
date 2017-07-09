@@ -15,7 +15,7 @@ const FETCH_MARKERS_SUCCESS = 'map/FETCH_MARKERS_SUCCESS';
 const FETCH_MARKERS_ERROR = 'map/FETCH_MARKERS_ERROR';
 import { UNAUTH_USER } from './auth';
 
-const mapCenter = (state =[], action={}) => {
+const mapCenter = (state =[46.4819845,30.7346978], action={}) => {
     switch (action.type) {
         case SET_CENTER:
             return [action.latlng.lat, action.latlng.lng];

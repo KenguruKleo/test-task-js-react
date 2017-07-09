@@ -27,7 +27,7 @@ class MapComponent extends React.Component {
         if( this.state.enableAddMarkers ){
             this.props.addMarker(e.latlng)
         } else {
-            //TODO show near objects
+            //TODO show near objects by category
             console.log(e.latlng);
         }
 
@@ -35,7 +35,7 @@ class MapComponent extends React.Component {
 
     render() {
         const props = this.props;
-        const {zoom, markers, markersByCategory} = props;
+        const {mapCenter, zoom, markers, markersByCategory} = props;
 
         return (
             <div className="pageMap">
@@ -97,9 +97,17 @@ class MapComponent extends React.Component {
                         onMoveend ={e=>props.setMapCenter(e.target.getCenter())}
                     >
                         <Marker pos={myPos} staticLabel="It's my location"/>
+
                         { markers.map((marker, index) => (
                             <Marker pos={marker.pos} key={index}/>
                         )) }
+
+                        {
+                            markersByCategory.markers.map((marker, index) => {
+                                return <Marker pos={marker.pos} key={index}/>
+                            })
+                        }
+
                     </Map>
                 </Col>
             </div>
@@ -110,6 +118,7 @@ class MapComponent extends React.Component {
 
 export default connect(
     state => ({
+        mapCenter: state.map.mapCenter,
         zoom: state.map.zoom,
         markers: state.map.markers,
         markersByCategory: state.map.markersByCategory
