@@ -4,6 +4,7 @@ import URLS from '../api/urls';
 const ZOOM_IN = 'map/ZOOM_IN';
 const ZOOM_OUT = 'map/ZOOM_OUT';
 const SET_ZOOM = 'map/SET_ZOOM';
+const SET_CENTER = 'map/SET_CENTER';
 const ADD_MARKER = 'map/ADD_MARKER';
 const UNDO_ADD_MARKER = 'map/UNDO_ADD_MARKER';
 const SAVE_MARKERS = 'map/SAVE_MARKERS';
@@ -11,7 +12,38 @@ const SAVE_MARKERS_SUCCESS = 'map/SAVE_MARKERS_SUCCESS';
 const FETCH_MARKERS = 'map/FETCH_MARKERS';
 const FETCH_MARKERS_SUCCESS = 'map/FETCH_MARKERS_SUCCESS';
 const FETCH_MARKERS_ERROR = 'map/FETCH_MARKERS_ERROR';
+const SELECT_CATEGORY = 'map/SELECT_CATEGORY';
+const FETCH_MARKERS_BY_CATEGORY = 'map/FETCH_MARKERS_BY_CATEGORY';
+const FETCH_MARKERS_BY_CATEGORY_SUCCESS = 'map/FETCH_MARKERS_BY_CATEGORY_SUCCESS';
+const FETCH_MARKERS_BY_CATEGORY_ERROR = 'map/FETCH_MARKERS_BY_CATEGORY_ERROR';
 import { UNAUTH_USER } from './auth';
+
+const categoriesList = ()=>[
+    {name: "Pharmacies", id: "pharmacy"},
+    {name: "Gas stations", id: "gas_station"},
+    {name: "Schools", id: "school"},
+    {name: "Restaurants", id: "restaurant"},
+];
+
+const mapCenter = (state =[], action={}) => {
+    switch (action.type) {
+        case SET_CENTER:
+            return [action.latlng.lat, action.latlng.lng];
+        default:
+            return state;
+    }
+};
+
+const markersByCategory = ()=>[];
+
+const selectedCategory = (state = null, action ={}) => {
+    switch (action.type){
+        case SELECT_CATEGORY:
+            return action.selected;
+        default:
+            return state;
+    }
+};
 
 const zoom = (state = 16, action = {}) => {
     switch (action.type){
@@ -56,10 +88,17 @@ const markers = (state = [], action ={}) => {
 };
 
 export default combineReducers({
+    mapCenter,
     zoom,
-    markers
+    markers,
+    markersByCategory: combineReducers({
+        selected: selectedCategory,
+        categoriesList,
+        markersByCategory
+    })
 })
 
+export const setMapCenter = latlng => ({type: SET_CENTER, latlng});
 export const zoomIn = ()=> ({type: ZOOM_IN});
 export const zoomOut = ()=> ({type: ZOOM_OUT});
 export const setZoom = zoom => ({type: SET_ZOOM, zoom});
@@ -99,5 +138,11 @@ export const fetchMarkers = ()=>{
                 dispatch({ type: FETCH_MARKERS_ERROR });
             }
         });
+    }
+};
+export const selectCategory = category=>{
+    return {
+        type: SELECT_CATEGORY,
+        selected: category
     }
 };

@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers, fetchMarkers } from '../reducers/map';
+import { setMapCenter, zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers, fetchMarkers, selectCategory } from '../reducers/map';
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import Button from 'react-bootstrap/lib/Button';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Row from 'react-bootstrap/lib/Row';
-import ControlLabel from 'react-bootstrap/lib/ControlLabel';
-import FormControl from 'react-bootstrap/lib/FormControl';
-import FormGroup from 'react-bootstrap/lib/FormGroup';
+import Col from 'react-bootstrap/lib/Col';
+import ListGroup from 'react-bootstrap/lib/ListGroup';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import Checkbox from 'react-bootstrap/lib/Checkbox';
 import Map from '2gis-maps-react/lib/Map';
 import Marker from '2gis-maps-react/lib/Marker';
@@ -27,48 +27,80 @@ class MapComponent extends React.Component {
             this.props.addMarker(e.latlng)
         } else {
             //TODO show near objects
+            console.log(e.latlng);
         }
 
     }
 
     render() {
         const props = this.props;
-        const {zoom, markers} = props;
+        const {zoom, markers, markersByCategory} = props;
 
         return (
             <div className="pageMap">
-                <Navbar.Form>
-                    <Row>
-                        <ButtonGroup>
-                            <Button onClick={props.zoomIn}>Zoom In</Button>
-                            <Button onClick={props.zoomOut}>Zoom Out</Button>
-                            <Button onClick={props.undoAddMarker}>Undo add marker</Button>
-                            <Button onClick={props.saveMarkers}>Save</Button>
-                            <Button onClick={props.fetchMarkers}>Load</Button>
-                        </ButtonGroup>
-                    </Row>
-                </Navbar.Form>
-                <form>
-                    <Checkbox
-                        checked={this.state.enableAddMarkers}
-                        onClick = {
-                            ()=>this.setState( {enableAddMarkers: ! this.state.enableAddMarkers} )
-                        }>
-                        Click on the map add new marker
-                    </Checkbox>
-                </form>
-                <Map
-                    style={{width: "100%", height: "500px"}}
-                    center={myPos}
-                    zoom={zoom}
-                    onZoomend={ e => props.setZoom(e.target.getZoom()) }
-                    onClick={ ::this.clickMapHandler }
-                >
-                    <Marker pos={myPos} staticLabel="It's my location"/>
-                    { markers.map((marker, index) => (
-                        <Marker pos={marker.pos} key={index}/>
-                    )) }
-                </Map>
+                <Col md = {2}>
+
+                </Col>
+                <Col md = {10}>
+                    <Navbar.Form>
+                        <Row>
+                            <ButtonGroup>
+                                <Button onClick={props.zoomIn}>Zoom In</Button>
+                                <Button onClick={props.zoomOut}>Zoom Out</Button>
+                                <Button onClick={props.undoAddMarker}>Undo add marker</Button>
+                                <Button onClick={props.saveMarkers}>Save</Button>
+                                <Button onClick={props.fetchMarkers}>Load</Button>
+                            </ButtonGroup>
+                        </Row>
+                    </Navbar.Form>
+                    <form>
+                        <Checkbox
+                            checked={this.state.enableAddMarkers}
+                            onClick = {
+                                ()=>this.setState( {enableAddMarkers: ! this.state.enableAddMarkers} )
+                            }>
+                            Click on the map add new marker
+                        </Checkbox>
+                    </form>
+                </Col>
+                <Col md = {2}>
+                    <ListGroup>
+                        <ListGroupItem
+                            active ={markersByCategory.selected === null}
+                            onClick ={()=>props.selectCategory(null)}
+                        >
+                            Not selected
+                        </ListGroupItem>
+                        {
+                            markersByCategory.categoriesList.map( item => {
+                                return (
+                                    <ListGroupItem
+                                        key={item.id}
+                                        active ={item.id === markersByCategory.selected}
+                                        onClick ={()=>props.selectCategory(item.id)}
+                                    >
+                                        {item.name}
+                                    </ListGroupItem>
+                                );
+                            })
+                        }
+                    </ListGroup>
+                </Col>
+                <Col md = {10}>
+                    <Map
+                        style={{width: "100%", height: "500px"}}
+                        center={myPos}
+                        zoom={zoom}
+                        onZoomend={ e => props.setZoom(e.target.getZoom()) }
+                        onClick={ ::this.clickMapHandler }
+                        onMoveend ={e=>props.setMapCenter(e.target.getCenter())}
+                    >
+                        <Marker pos={myPos} staticLabel="It's my location"/>
+                        { markers.map((marker, index) => (
+                            <Marker pos={marker.pos} key={index}/>
+                        )) }
+                    </Map>
+                </Col>
             </div>
         );
     }
@@ -78,7 +110,8 @@ class MapComponent extends React.Component {
 export default connect(
     state => ({
         zoom: state.map.zoom,
-        markers: state.map.markers
+        markers: state.map.markers,
+        markersByCategory: state.map.markersByCategory
     }),
-    { zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers, fetchMarkers }
+    { setMapCenter, zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers, fetchMarkers, selectCategory }
 )(MapComponent);
