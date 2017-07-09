@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setMapCenter, zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers, fetchMarkers, selectCategory } from '../reducers/map';
+import { setMapCenter, zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers, fetchMarkers } from '../reducers/map';
+import { selectCategory } from '../reducers/markers_by_category';
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import Button from 'react-bootstrap/lib/Button';
 import Navbar from 'react-bootstrap/lib/Navbar';
