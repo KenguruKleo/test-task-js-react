@@ -90,6 +90,14 @@ const fetchMarkersByCategory = (category, center) => {
     }
 };
 
+export const clickOnMapToShowMarketsByCategory = latlng => {
+    return (dispatch, getState)=>{
+        const category = getState().map.markersByCategory.category;
+
+        dispatch( fetchMarkersByCategory(category, [latlng.lat, latlng.lng]) );
+    };
+};
+
 export const selectCategory = category=>{
     return (dispatch, getState)=>{
         const state = getState().map;

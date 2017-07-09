@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setMapCenter, zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers, fetchMarkers } from '../reducers/map';
-import { selectCategory } from '../reducers/markers_by_category';
+import { selectCategory, clickOnMapToShowMarketsByCategory } from '../reducers/markers_by_category';
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import Button from 'react-bootstrap/lib/Button';
 import Navbar from 'react-bootstrap/lib/Navbar';
@@ -27,15 +27,14 @@ class MapComponent extends React.Component {
         if( this.state.enableAddMarkers ){
             this.props.addMarker(e.latlng)
         } else {
-            //TODO show near objects by category
-            console.log(e.latlng);
+            this.props.clickOnMapToShowMarketsByCategory( e.latlng );
         }
 
     }
 
     render() {
         const props = this.props;
-        const {mapCenter, zoom, markers, markersByCategory} = props;
+        const {zoom, markers, markersByCategory} = props;
 
         return (
             <div className="pageMap">
@@ -123,5 +122,8 @@ export default connect(
         markers: state.map.markers,
         markersByCategory: state.map.markersByCategory
     }),
-    { setMapCenter, zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers, fetchMarkers, selectCategory }
+    {
+        setMapCenter, zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers,
+        fetchMarkers, selectCategory,clickOnMapToShowMarketsByCategory
+    }
 )(MapComponent);
