@@ -1,5 +1,6 @@
 import Authentication from './controllers/authentication';
 import Markers from './controllers/markers';
+import MarkersByCategory from './controllers/markers_by_category';
 import passortService from './services/passport';
 import passport from 'passport';
 
@@ -19,4 +20,6 @@ export default function ( app ) {
 
     app.post( '/markers', requireAuth, Markers.saveMarkers );
     app.get( '/markers', requireAuth, Markers.fetchMarkers );
+
+    app.post( '/markers_by_category', requireAuth, MarkersByCategory.findMarkers );
 }

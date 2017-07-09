@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import URLS from '../api/urls';
 
-const SELECT_CATEGORY = 'map/SELECT_CATEGORY';
-const FETCH_MARKERS_BY_CATEGORY = 'map/FETCH_MARKERS_BY_CATEGORY';
-const FETCH_MARKERS_BY_CATEGORY_SUCCESS = 'map/FETCH_MARKERS_BY_CATEGORY_SUCCESS';
-const FETCH_MARKERS_BY_CATEGORY_ERROR = 'map/FETCH_MARKERS_BY_CATEGORY_ERROR';
+const SELECT_CATEGORY = 'markers_by_category/SELECT_CATEGORY';
+const FETCH_MARKERS_BY_CATEGORY = 'markers_by_category/FETCH_MARKERS_BY_CATEGORY';
+const FETCH_MARKERS_BY_CATEGORY_SUCCESS = 'markers_by_category/FETCH_MARKERS_BY_CATEGORY_SUCCESS';
+const FETCH_MARKERS_BY_CATEGORY_ERROR = 'markers_by_category/FETCH_MARKERS_BY_CATEGORY_ERROR';
 
 const categoriesList = ()=>[
     {name: "Pharmacies", id: "pharmacy"},
@@ -18,6 +18,15 @@ const markersByCategory = (state=[], action={}) => {
         case FETCH_MARKERS_BY_CATEGORY:
         case FETCH_MARKERS_BY_CATEGORY_ERROR:
             return [];
+        case FETCH_MARKERS_BY_CATEGORY_SUCCESS:
+            return action.markers.map( item => {
+                return {
+                    pos: [
+                        item.geometry.location.lat,
+                        item.geometry.location.lng
+                    ]
+                };
+            });
         default:
             return state;
     }
@@ -51,9 +60,36 @@ export default combineReducers({
     fetchingMarkersByCategories
 });
 
-export const selectCategory = category=>{
-    return {
-        type: SELECT_CATEGORY,
-        selected: category
+const fetchMarkersByCategory = (category, center) => {
+    return dispatch => {
+        const token = localStorage.getItem('token');
+        fetch(URLS.MARKERS_BY_CATEGORY, {
+            method: 'post',
+            headers: {authorization: token}
+        }).then(response => {
+            if (response.status === 200) {
+                response.json().then(data => {
+                    console.log(data);
+                    dispatch({type: FETCH_MARKERS_BY_CATEGORY_SUCCESS, markers: data.results});
+                });
+            } else {
+                dispatch({type: FETCH_MARKERS_BY_CATEGORY_ERROR});
+            }
+        }).catch(err => {
+            console.log(err);
+            dispatch({ type: FETCH_MARKERS_BY_CATEGORY_ERROR });
+        })
     }
+};
+
+export const selectCategory = category=>{
+    return (dispatch, getState)=>{
+        const state = getState().map;
+
+        dispatch({ type: SELECT_CATEGORY, selected: category });
+
+        dispatch( fetchMarkersByCategory() );
+
+
+    };
 };

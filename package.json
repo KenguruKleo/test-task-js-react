@@ -26,6 +26,7 @@
     "jwt-simple": "^0.5.1",
     "mongoose": "^4.9.5",
     "morgan": "^1.8.1",
+    "node-fetch": "^1.7.1",
     "passport": "^0.3.2",
     "passport-http": "^0.3.0",
     "passport-jwt": "^2.2.1",
