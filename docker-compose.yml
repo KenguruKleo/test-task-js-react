@@ -4,7 +4,7 @@ services:
         container_name: "test-task-js-react"
         image: kengurukleo/test-task-js-react
         environment:
-          - MONGO_CONNECTION=mongodb://localhost:27017/site_db
+          - MONGO_CONNECTION=mongodb://mongodb:27017/site_db
           - PORT=8080
         ports:
           - 80:8080
