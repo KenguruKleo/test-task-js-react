@@ -74,3 +74,14 @@ Docker image available in docker hub [kengurukleo/test-task-js-react](https://hu
 All in one with *docker-compose*
 - `curl https://raw.githubusercontent.com/KenguruKleo/test-task-js-react/master/docker-compose.yml > docker-compose.yml`
 - `docker-compose up`
+- Go to [http://localhost](http://localhost)
+
+## Usage
+
+- Map is protected page, so you should SignIn or SignUp at first
+- For adding markers - select appropriate checkbox in other case 
+click by Map will show nearest object by selected category around click
+
+## License
+
+Current google API key is only for preview - in own projects please use self google API keys
