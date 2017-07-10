@@ -47,3 +47,30 @@ Client side:
 - Use [2GIS](http://api.2gis.ua/) to work with map
 - Use Google Places API Web Service for find places
 
+## Dev mode
+- Start MongoDB on `localhost` 
+or you can specify other connection string in env `MONGO_CONNECTION`
+or you can start mongoDB in docker container `docker run --name mongo-server -p 127.0.0.1:27017:27017 -d mongo`
+- `npm run dev-start` (will start backend server on port 3090 and dev http server on port 3000)
+- Go to [http://localhost:3000](http://localhost:3000) 
+
+## Build and Start
+
+- `npm install`
+- `npm run build client`
+- Start MongoDB on `localhost` 
+or you can specify other connection string in env `MONGO_CONNECTION`
+or you can start mongoDB in docker container `docker run --name mongo-server -p 127.0.0.1:27017:27017 -d mongo`
+- Start http server on port 3090 `npm start` (or you can specify port in env PORT)
+- Go to [http://localhost:3090](http://localhost:3090) 
+
+## With Docker
+
+Docker image available in docker hub [kengurukleo/test-task-js-react](https://hub.docker.com/r/kengurukleo/test-task-js-react/)
+- Start MongoDB on `localhost` 
+- `docker pull kengurukleo/test-task-js-react`
+- `docker -d -p 80:8080 kengurukleo/test-task-js-react`
+
+All in one with *docker-compose*
+- `curl https://raw.githubusercontent.com/KenguruKleo/test-task-js-react/master/docker-compose.yml > docker-compose.yml`
+- `docker-compose up`

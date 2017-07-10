@@ -1,4 +1,4 @@
-const ROOT_URL = process.env.NODE_ENV == "production" ? '' : 'http://localhost:3090';
+const ROOT_URL = process.env.NODE_ENV == "production" ? '' : 'http://localhost:'+(process.env.PORT || '3090');
 
 export default {
     AUTH_ROOT: ROOT_URL,

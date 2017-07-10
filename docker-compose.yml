@@ -1,7 +1,6 @@
 version: '2'
 services:
     myapp:
-        build: .
         container_name: "test-task-js-react"
         image: kengurukleo/test-task-js-react
         environment:
