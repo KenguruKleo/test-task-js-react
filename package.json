@@ -8,7 +8,9 @@
     "dev-start-server": "nodemon ./server/index.js --exec babel-node --presets es2015,stage-2",
     "dev-start-client": "webpack-dev-server --progress --hot --inline --port 3000",
     "build-client": "webpack -p",
-    "start": "babel-node ./server/index.js --presets es2015,stage-2"
+    "start": "babel-node ./server/index.js --presets es2015,stage-2",
+    "test": "jest",
+    "codecov": "codecov"
   },
   "author": "Konstantin Yemelianov",
   "license": "ISC",
@@ -71,5 +73,9 @@
     "url-loader": "0.5.8",
     "webpack": "2.3.3",
     "webpack-dev-server": "2.4.1"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   }
 }
