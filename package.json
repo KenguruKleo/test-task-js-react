@@ -4,10 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-dev": "concurrently --kill-others \"npm run start-server\" \"npm run start-client\"",
-    "start-client": "webpack-dev-server --progress --hot --inline --port 3000",
+    "dev-start": "concurrently --kill-others \"npm run dev-start-server\" \"npm run dev-start-client\"",
+    "dev-start-server": "nodemon ./server/index.js --exec babel-node --presets es2015,stage-2",
+    "dev-start-client": "webpack-dev-server --progress --hot --inline --port 3000",
+
     "build-client": "webpack -p",
-    "start-server": "nodemon ./server/index.js --exec babel-node --presets es2015,stage-2",
+
+    "start": "babel-node ./server/index.js --presets es2015,stage-2",
+
     "mongo-server": "docker run --name mongo-server -p 127.0.0.1:27017:27017 -d mongo",
     "mongo-shell": "docker run -it --link mongo-server:mongo --rm mongo sh -c 'exec mongo \"$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT/test\"'"
   },
