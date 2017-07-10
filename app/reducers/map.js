@@ -8,6 +8,7 @@ const SET_ZOOM = 'map/SET_ZOOM';
 const SET_CENTER = 'map/SET_CENTER';
 const ADD_MARKER = 'map/ADD_MARKER';
 const UNDO_ADD_MARKER = 'map/UNDO_ADD_MARKER';
+const CLEAR_MARKERS = 'map/CLEAR_MARKERS';
 const SAVE_MARKERS = 'map/SAVE_MARKERS';
 const SAVE_MARKERS_SUCCESS = 'map/SAVE_MARKERS_SUCCESS';
 const FETCH_MARKERS = 'map/FETCH_MARKERS';
@@ -51,6 +52,7 @@ const marker = (state = {pos: [0,0]}, action = {}) => {
 const markers = (state = [], action ={}) => {
     switch (action.type){
         case FETCH_MARKERS:
+        case CLEAR_MARKERS:
         case UNAUTH_USER:
             return [];
         case FETCH_MARKERS_SUCCESS:
@@ -115,3 +117,4 @@ export const fetchMarkers = ()=>{
         });
     }
 };
+export const clearMarkers = ()=> ({type: CLEAR_MARKERS});

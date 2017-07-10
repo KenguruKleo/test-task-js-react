@@ -25,7 +25,8 @@ const markers = (state=[], action={}) => {
                     pos: [
                         item.geometry.location.lat,
                         item.geometry.location.lng
-                    ]
+                    ],
+                    icon: item.icon
                 };
             });
         default:

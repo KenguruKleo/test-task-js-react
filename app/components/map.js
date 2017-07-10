@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setMapCenter, zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers, fetchMarkers } from '../reducers/map';
+import { setMapCenter, zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers, fetchMarkers, clearMarkers } from '../reducers/map';
 import { selectCategory, clickOnMapToShowMarketsByCategory } from '../reducers/markers_by_category';
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import Button from 'react-bootstrap/lib/Button';
@@ -12,6 +12,7 @@ import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import Checkbox from 'react-bootstrap/lib/Checkbox';
 import Map from '2gis-maps-react/lib/Map';
 import Marker from '2gis-maps-react/lib/Marker';
+import Icon from '2gis-maps-react/lib/Icon';
 
 const myPos = [46.4819845,30.7346978];
 
@@ -50,6 +51,7 @@ class MapComponent extends React.Component {
                                 <Button onClick={props.undoAddMarker}>Undo add marker</Button>
                                 <Button onClick={props.saveMarkers}>Save</Button>
                                 <Button onClick={props.fetchMarkers}>Load</Button>
+                                <Button onClick={props.clearMarkers}>Clear markers</Button>
                             </ButtonGroup>
                         </Row>
                     </Navbar.Form>
@@ -103,7 +105,13 @@ class MapComponent extends React.Component {
 
                         {
                             markersByCategory.markers.map((marker, index) => {
-                                return <Marker pos={marker.pos} key={index}/>
+                                return (
+                                    <Marker
+                                        pos={marker.pos}
+                                        key={index}
+                                    >
+                                    </Marker>
+                                );
                             })
                         }
 
@@ -124,6 +132,6 @@ export default connect(
     }),
     {
         setMapCenter, zoomIn, zoomOut, setZoom, addMarker, undoAddMarker, saveMarkers,
-        fetchMarkers, selectCategory,clickOnMapToShowMarketsByCategory
+        fetchMarkers, clearMarkers, selectCategory,clickOnMapToShowMarketsByCategory
     }
 )(MapComponent);
