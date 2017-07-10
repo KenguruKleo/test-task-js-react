@@ -82,6 +82,13 @@ All in one with *docker-compose*
 - For adding markers - select appropriate checkbox in other case 
 click by Map will show nearest object by selected category around click
 
+## Uni tests
+
+- Start unit tests: `npm run test`
+- Coverage will be available in local folder `coverage`
+- After each commit Travis job run unit tests 
+and send coverage to [https://codecov.io/gh/KenguruKleo/test-task-js-react](https://codecov.io/gh/KenguruKleo/test-task-js-react)
+
 ## License
 
 Current google API key is only for preview - in own projects please use self google API keys
