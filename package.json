@@ -1,4 +1,5 @@
 {
+  "author": "Konstantin Yemelianov",
   "name": "server",
   "version": "1.0.0",
   "description": "",
@@ -12,7 +13,6 @@
     "test": "jest",
     "codecov": "codecov"
   },
-  "author": "Konstantin Yemelianov",
   "license": "ISC",
   "dependencies": {
     "2gis-maps": "^3.3.5",
