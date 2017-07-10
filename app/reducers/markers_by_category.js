@@ -64,6 +64,8 @@ export default combineReducers({
 const fetchMarkersByCategory = (category, center) => {
     return dispatch => {
 
+        if( !category ) { return null }
+
         dispatch({ type: FETCH_MARKERS_BY_CATEGORY });
 
         const token = localStorage.getItem('token');
@@ -92,9 +94,9 @@ const fetchMarkersByCategory = (category, center) => {
 
 export const clickOnMapToShowMarketsByCategory = latlng => {
     return (dispatch, getState)=>{
-        const category = getState().map.markersByCategory.category;
+        const category = getState().map.markersByCategory.selected;
 
-        dispatch( fetchMarkersByCategory(category, [latlng.lat, latlng.lng]) );
+        dispatch(fetchMarkersByCategory(category, [latlng.lat, latlng.lng]));
     };
 };
 
@@ -104,8 +106,6 @@ export const selectCategory = category=>{
 
         dispatch({ type: SELECT_CATEGORY, selected: category });
 
-        if( category !== null ){
-            dispatch( fetchMarkersByCategory(category, state.mapCenter) );
-        }
+        dispatch( fetchMarkersByCategory(category, state.mapCenter) );
     };
 };
