@@ -8,10 +8,16 @@ import cors from 'cors';
 import config from './config';
 
 mongoose.Promise = global.Promise;
-const mongo_connection = config.mongo_connection || process.env.MONGO_CONNECTION;
-mongoose.connect(mongo_connection, {
-    useMongoClient: true,
-}).then( db => {} );
+
+const db = config.mongo_connection || process.env.MONGO_CONNECTION;
+mongoose.connect(db, (err) => {
+    if (err) {
+        console.log(`===>  Error connecting to ${db}`);
+        console.log(`Reason: ${err}`);
+    } else {
+        console.log(`===>  Succeeded in connecting to ${db}`);
+    }
+});
 
 const app = express();
 
