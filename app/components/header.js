@@ -16,6 +16,7 @@ class Header extends React.Component{
                 </Navbar.Header>
                 <Nav>
                     <LinkContainer to="/map"><NavItem  eventKey={4}>Map</NavItem></LinkContainer>
+                    <LinkContainer to="/about"><NavItem  eventKey={4}>About</NavItem></LinkContainer>
                 </Nav>
                 <Nav pullRight>
                     { this.props.authenticated
@@ -30,8 +31,6 @@ class Header extends React.Component{
         );
     }
 }
-
-//export default Header;
 
 export default connect(
     state => ({

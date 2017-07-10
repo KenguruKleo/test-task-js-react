@@ -14,6 +14,7 @@ import Signin from './components/auth/signin';
 import Signout from './components/auth/signout';
 import Signup from './components/auth/signup';
 import Map from './components/map';
+import About from './components/about';
 
 const Welcome = ()=><h1 className="base-style">Welcome</h1>;
 
@@ -31,6 +32,7 @@ ReactDOM.render(
             <App>
                 <Switch>
                     <Route exact path="/" component={ Welcome }/>
+                    <Route path="/about" component={About}/>
                     <Route path="/signin" component={Signin}/>
                     <Route path="/signup" component={Signup}/>
                     <Route path="/signout" component={Signout}/>
