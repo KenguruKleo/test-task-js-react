@@ -9,7 +9,7 @@ import config from './config';
 
 mongoose.Promise = global.Promise;
 
-const db = config.mongo_connection || process.env.MONGO_CONNECTION;
+const db = process.env.MONGO_CONNECTION || config.mongo_connection;
 mongoose.connect(db, (err) => {
     if (err) {
         console.log(`===>  Error connecting to ${db}`);
